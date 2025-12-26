@@ -1,18 +1,6 @@
-#!/bin/bash
-# =============================================================================
-# LLM Observability Copilot - Deployment Script
-# =============================================================================
-# Usage:
-#   ./deploy.sh setup    # One-time setup (APIs, Artifact Registry, secrets)
-#   ./deploy.sh build    # Build and push Docker image
-#   ./deploy.sh deploy   # Deploy to Cloud Run
-#   ./deploy.sh all      # Full deployment (build + deploy)
-#   ./deploy.sh local    # Run locally with Docker Compose
-# =============================================================================
-
 set -e
 
-# Configuration
+
 PROJECT_ID="${GOOGLE_CLOUD_PROJECT:-$(gcloud config get-value project)}"
 REGION="${REGION:-us-central1}"
 SERVICE_NAME="llm-observability-copilot"
@@ -31,9 +19,7 @@ log_success() { echo -e "${GREEN}✅ $1${NC}"; }
 log_warning() { echo -e "${YELLOW}⚠️  $1${NC}"; }
 log_error() { echo -e "${RED}❌ $1${NC}"; }
 
-# -----------------------------------------------------------------------------
-# Setup: Enable APIs and create resources
-# -----------------------------------------------------------------------------
+
 setup() {
     log_info "Setting up Google Cloud resources..."
     
@@ -42,7 +28,7 @@ setup() {
     log_info "Region: ${REGION}"
     echo ""
 
-    # Enable required APIs
+   
     log_info "Enabling required APIs..."
     gcloud services enable \
         cloudbuild.googleapis.com \
@@ -54,7 +40,6 @@ setup() {
         --project="${PROJECT_ID}"
     log_success "APIs enabled"
 
-    # Create Artifact Registry repository
     log_info "Creating Artifact Registry repository..."
     gcloud artifacts repositories create "${REPOSITORY}" \
         --repository-format=docker \
@@ -63,12 +48,10 @@ setup() {
         --project="${PROJECT_ID}" 2>/dev/null || log_warning "Repository already exists"
     log_success "Artifact Registry ready"
 
-    # Configure Docker authentication
     log_info "Configuring Docker authentication..."
     gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
     log_success "Docker authentication configured"
 
-    # Create secrets (if DD_API_KEY is set)
     if [ -n "${DD_API_KEY}" ]; then
         log_info "Creating Datadog API Key secret..."
         echo -n "${DD_API_KEY}" | gcloud secrets create dd-api-key \
@@ -95,7 +78,6 @@ setup() {
         log_warning "DD_APP_KEY not set - skipping secret creation"
     fi
 
-    # Grant Cloud Run access to secrets
     log_info "Granting Cloud Run access to secrets..."
     PROJECT_NUMBER=$(gcloud projects describe "${PROJECT_ID}" --format='value(projectNumber)')
     
@@ -115,18 +97,16 @@ setup() {
     log_success "Setup complete! Run './deploy.sh all' to build and deploy."
 }
 
-# -----------------------------------------------------------------------------
-# Build: Build and push Docker image
-# -----------------------------------------------------------------------------
+
 build() {
     log_info "Building Docker image..."
     
-    # Generate version tag
+   
     VERSION=$(date +%Y%m%d-%H%M%S)
     
     log_info "Building: ${IMAGE_NAME}:${VERSION}"
     
-    # Build for linux/amd64 (required by Cloud Run)
+  
     docker build \
         --platform linux/amd64 \
         -t "${IMAGE_NAME}:${VERSION}" \
@@ -141,13 +121,11 @@ build() {
     
     log_success "Image pushed: ${IMAGE_NAME}:${VERSION}"
     
-    # Export for deploy step
+   
     export IMAGE_TAG="${VERSION}"
 }
 
-# -----------------------------------------------------------------------------
-# Deploy: Deploy to Cloud Run
-# -----------------------------------------------------------------------------
+
 deploy() {
     log_info "Deploying to Cloud Run..."
     
@@ -166,7 +144,6 @@ deploy() {
         --set-secrets="DD_API_KEY=dd-api-key:latest,DD_APP_KEY=dd-app-key:latest" \
         --project="${PROJECT_ID}"
     
-    # Get the service URL
     SERVICE_URL=$(gcloud run services describe "${SERVICE_NAME}" \
         --region="${REGION}" \
         --project="${PROJECT_ID}" \
@@ -179,9 +156,6 @@ deploy() {
     echo ""
 }
 
-# -----------------------------------------------------------------------------
-# Local: Run with Docker Compose
-# -----------------------------------------------------------------------------
 local_run() {
     log_info "Starting local development environment..."
     
@@ -192,17 +166,13 @@ local_run() {
     docker-compose up --build
 }
 
-# -----------------------------------------------------------------------------
-# All: Full deployment
-# -----------------------------------------------------------------------------
+
 all() {
     build
     deploy
 }
 
-# -----------------------------------------------------------------------------
-# Main
-# -----------------------------------------------------------------------------
+
 case "${1}" in
     setup)
         setup
