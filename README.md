@@ -34,7 +34,7 @@
 
 Companies deploying LLMs in production face unique challenges that traditional monitoring tools can't address:
 
-| Challenge | Impact | How We Solve It |
+| Challenge | Impact | How I Solve It |
 |-----------|--------|-----------------|
 | **Hallucinations** | AI gives wrong answers, damaging trust | Real-time hallucination risk scoring (0-1) per response |
 | **Unpredictable Costs** | $10K+ monthly bills from runaway token usage | Per-request cost tracking with anomaly alerts |
@@ -49,7 +49,7 @@ Companies deploying LLMs in production face unique challenges that traditional m
 
 ### 📊 Multi-Dimensional Quality Scoring
 
-We go beyond basic metrics. Every LLM response is scored across **four quality dimensions**:
+I go beyond basic metrics. Every LLM response is scored across **four quality dimensions**:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -105,7 +105,7 @@ All blocked requests are logged to Datadog for security audit trails.
 
 ### 🤖 AI-Powered Incident Triage
 
-When something goes wrong, don't spend hours debugging. Our AI copilot:
+When something goes wrong, don't spend hours debugging. My AI copilot:
 
 1. **Detects anomalies** from metric patterns (latency spikes, error rates, cost surges)
 2. **Analyzes root cause** using Gemini 2.5 Pro
@@ -130,7 +130,7 @@ When something goes wrong, don't spend hours debugging. Our AI copilot:
 
 ### 📈 Proactive Insights (Not Just Reactive Monitoring)
 
-Traditional monitoring tells you what happened. We tell you **what's about to happen**:
+Traditional monitoring tells you what happened. I tell you **what's about to happen**:
 
 - **Predictive Alerts** — "Error rate trending up, will breach SLO in 15 minutes"
 - **Cost Forecasting** — "At current usage, monthly bill will be $4,200"
@@ -188,7 +188,7 @@ Traditional monitoring tells you what happened. We tell you **what's about to ha
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology | Why We Chose It |
+| Layer | Technology | Why I Chose It |
 |-------|------------|-----------------|
 | **Frontend** | React 19, Vite, Tailwind CSS, Framer Motion | Fast, modern, great DX |
 | **Backend** | FastAPI, Python 3.11, Pydantic | Async, type-safe, OpenAPI |
@@ -260,7 +260,7 @@ cd frontend && npm install && npm run dev
 
 ### What Gets Sent to Datadog
 
-We send **comprehensive telemetry** via APM, metrics, and logs:
+I send **comprehensive telemetry** via APM, metrics, and logs:
 
 #### Metrics
 
@@ -465,7 +465,7 @@ llm-observability-copilot/
 
 ## 🤝 Contributing
 
-We welcome contributions! See our [Contributing Guide](CONTRIBUTING.md).
+I welcome contributions! See my [Contributing Guide](CONTRIBUTING.md).
 
 ```bash
 # Fork and clone
