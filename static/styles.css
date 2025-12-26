@@ -1,0 +1,33 @@
+body {
+  font-family: system-ui, sans-serif;
+  background: #f5f7fb;
+}
+
+.container {
+  max-width: 720px;
+  margin: 40px auto;
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+#chat {
+  min-height: 300px;
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin-bottom: 12px;
+  overflow-y: auto;
+}
+
+.message {
+  margin-bottom: 8px;
+}
+
+.user {
+  font-weight: bold;
+}
+
+.meta {
+  font-size: 0.8em;
+  color: #666;
+}

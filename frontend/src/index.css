@@ -1,0 +1,622 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   Premium Typography
+   - Space Grotesk: Headlines, UI text
+   - JetBrains Mono: Code, metrics, IDs
+   ============================================ */
+
+:root {
+  /* Font families */
+  --font-sans: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  
+  /* Font settings */
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  font-weight: 400;
+  font-feature-settings: 'ss01' on, 'ss02' on, 'cv01' on;
+  
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Apply fonts globally */
+body {
+  font-family: var(--font-sans);
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Monospace for code, metrics, and data */
+code, pre, kbd, samp,
+.font-mono,
+[class*="mono"] {
+  font-family: var(--font-mono) !important;
+  font-feature-settings: 'liga' on, 'calt' on;
+}
+
+/* Headings - slightly tighter tracking */
+h1, h2, h3, h4, h5, h6,
+.text-xl, .text-2xl, .text-3xl, .text-4xl {
+  font-family: var(--font-sans);
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+/* Large display text */
+.text-2xl, .text-3xl {
+  letter-spacing: -0.025em;
+}
+
+/* Small text - slightly wider tracking */
+.text-xs, .text-sm {
+  letter-spacing: 0.01em;
+}
+
+/* Links */
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+/* Buttons - inherit Space Grotesk */
+button {
+  font-family: var(--font-sans);
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Input fields */
+input, textarea, select {
+  font-family: var(--font-sans);
+}
+
+/* Tables - monospace for data cells */
+table {
+  font-family: var(--font-sans);
+}
+td[class*="mono"],
+.table-mono td {
+  font-family: var(--font-mono);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* ============================================
+   Shadcn/Tailwind CSS Variables
+   ============================================ */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Force true-black background in dark mode */
+html.dark,
+html.dark body,
+html.dark #root {
+  background: #0a0a0a !important;
+}
+
+/* ============================================
+   Gradient Header Animations
+   ============================================ */
+
+/* Subtle shimmer effect for header */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Glow pulse for logo */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.5);
+  }
+}
+
+.logo-glow {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Floating animation for background elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+.float-slow {
+  animation: float 6s ease-in-out infinite;
+}
+
+.float-medium {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Status badge pulse */
+@keyframes status-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.status-live {
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+/* ============================================
+   Glass Morphism Utilities
+   ============================================ */
+
+/* Glass card base */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Light mode glass */
+@media (prefers-color-scheme: light) {
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+}
+
+:root:not(.dark) .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+:root:not(.dark) .glass-strong {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Glow effect for cards on hover */
+.card-glow {
+  position: relative;
+}
+
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, 
+    rgba(139, 92, 246, 0.3), 
+    rgba(99, 102, 241, 0.1),
+    rgba(139, 92, 246, 0.3)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-glow:hover::before {
+  opacity: 1;
+}
+
+/* Shimmer effect for loading states */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ============================================
+   Markdown / AI Response Styling
+   ============================================ */
+
+/* Prose overrides for dark mode */
+.prose-invert {
+  --tw-prose-body: hsl(var(--foreground) / 0.8);
+  --tw-prose-headings: hsl(var(--foreground));
+  --tw-prose-links: #a78bfa;
+  --tw-prose-bold: hsl(var(--foreground));
+  --tw-prose-counters: hsl(var(--foreground) / 0.6);
+  --tw-prose-bullets: #8b5cf6;
+  --tw-prose-hr: hsl(var(--border));
+  --tw-prose-quotes: hsl(var(--foreground) / 0.7);
+  --tw-prose-quote-borders: #8b5cf6;
+  --tw-prose-code: #c4b5fd;
+  --tw-prose-pre-bg: rgba(0, 0, 0, 0.5);
+  --tw-prose-pre-code: #e9d5ff;
+  --tw-prose-th-borders: hsl(var(--border));
+  --tw-prose-td-borders: hsl(var(--border) / 0.5);
+}
+
+/* Code syntax highlighting colors */
+.prose code[class*="language-"],
+.prose pre[class*="language-"] {
+  color: #e9d5ff;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Inline code */
+.prose :not(pre) > code {
+  background: rgba(139, 92, 246, 0.15);
+  color: #c4b5fd;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+/* Code blocks */
+.prose pre {
+  background: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background: transparent !important;
+  padding: 0;
+  font-size: 0.875rem;
+  color: #e9d5ff;
+}
+
+/* Horizontal rule */
+.prose hr {
+  border-color: rgba(139, 92, 246, 0.3);
+  margin: 1.5rem 0;
+}
+
+/* Emphasis and strong */
+.prose em {
+  color: hsl(var(--foreground) / 0.9);
+}
+
+/* Task lists */
+.prose ul.contains-task-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.prose ul.contains-task-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.prose ul.contains-task-list input[type="checkbox"] {
+  margin-top: 0.25rem;
+  accent-color: #8b5cf6;
+}
+
+/* Tables */
+.prose table {
+  font-size: 0.875rem;
+  border-collapse: collapse;
+}
+
+.prose thead {
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.prose th {
+  font-weight: 600;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.prose td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid hsl(var(--border) / 0.3);
+}
+
+.prose tbody tr:hover {
+  background: rgba(139, 92, 246, 0.05);
+}
+
+/* Blockquotes */
+.prose blockquote {
+  border-left-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.05);
+  padding: 0.75rem 1rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+}
+
+.prose blockquote p {
+  margin: 0;
+}
+
+/* Images */
+.prose img {
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--border) / 0.5);
+}
+
+/* Numbered list styling */
+.prose ol {
+  counter-reset: list-counter;
+}
+
+.prose ol > li {
+  counter-increment: list-counter;
+}
+
+.prose ol > li::marker {
+  color: #8b5cf6;
+  font-weight: 600;
+}
+
+/* ============================================
+   Mobile Optimizations
+   ============================================ */
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Touch-friendly tap targets */
+@media (max-width: 768px) {
+  button, 
+  [role="button"],
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Larger text for readability */
+  .prose {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  
+  /* Better spacing on mobile */
+  .mobile-compact {
+    padding: 0.75rem;
+  }
+}
+
+/* Safe area insets for notched phones */
+@supports (padding: max(0px)) {
+  .safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  .safe-area-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+}
+
+/* Smooth momentum scrolling on iOS */
+.scroll-smooth {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent text selection on interactive elements */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Active state for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .touch-active:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+}
+
+/* Bottom sheet style for mobile dialogs */
+@media (max-width: 640px) {
+  [role="dialog"] > div {
+    border-radius: 1.5rem 1.5rem 0 0;
+    max-height: 90vh;
+  }
+}
+
+/* ============================================
+   Typography Utility Classes
+   ============================================ */
+
+/* Metric values - large monospace numbers */
+.metric-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Request IDs, trace IDs - compact mono */
+.trace-id {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* Cost/price displays */
+.price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Code blocks in AI responses */
+.ai-response code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: hsl(var(--muted));
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.ai-response pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  background: hsl(var(--muted));
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+/* Badges with numbers */
+.badge-numeric {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,18 @@
+
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+
+google-cloud-aiplatform>=1.38.0
+vertexai>=1.38.0
+google-cloud-firestore>=2.14.0
+
+ddtrace>=2.4.0
+datadog>=0.47.0
+
+#Python 3.9 compatibility
+importlib-metadata>=6.0.0
+
+requests>=2.31.0
+

@@ -1,0 +1,66 @@
+# =============================================================================
+# LLM Observability Copilot - Local Development
+# =============================================================================
+# Usage:
+#   docker-compose up --build        # Build and start
+#   docker-compose up -d             # Start in background
+#   docker-compose logs -f           # Follow logs
+#   docker-compose down              # Stop and remove
+# =============================================================================
+
+version: "3.9"
+
+services:
+  # ---------------------------------------------------------------------------
+  # Main Application
+  # ---------------------------------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - DD_SERVICE=llm-observability-copilot
+      - DD_ENV=local
+      - DD_VERSION=local
+      - DD_AGENT_HOST=datadog-agent
+      - DD_DOGSTATSD_PORT=8125
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_SITE=${DD_SITE:-datadoghq.com}
+      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/gcp-key.json
+    volumes:
+      # Mount GCP credentials for local development
+      - ${GOOGLE_APPLICATION_CREDENTIALS:-./credentials}:/app/credentials:ro
+    depends_on:
+      - datadog-agent
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ---------------------------------------------------------------------------
+  # Datadog Agent (for local observability)
+  # ---------------------------------------------------------------------------
+  datadog-agent:
+    image: gcr.io/datadoghq/agent:7
+    environment:
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_SITE=${DD_SITE:-datadoghq.com}
+      - DD_APM_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+    ports:
+      - "8125:8125/udp"  # DogStatsD
+      - "8126:8126"      # APM
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+
